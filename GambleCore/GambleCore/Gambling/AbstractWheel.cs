@@ -87,6 +87,10 @@ namespace GambleCore.Gambling
             if (stepCount < 0) stepCount += Symbols.Length;
             return stepCount;
         }
+
+        public override string ToString() {
+            return string.Join(" ", Symbols.Select(symbol => symbol.ToString()));
+        }
     }
 
     public class NullWheel : AbstractWheel
