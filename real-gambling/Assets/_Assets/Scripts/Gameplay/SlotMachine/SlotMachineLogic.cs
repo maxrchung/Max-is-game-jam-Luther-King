@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class SlotMachineLogic : MonoBehaviour
 {
-    public List<Reel> activeReels;
-    public List<ReelIcons> spinResult;
+    private List<Reel> activeReels;
+    private List<ReelIcons> spinResult;
     
     private void Start()
     {
@@ -40,6 +40,7 @@ public class SlotMachineLogic : MonoBehaviour
     {
         spinResult.Clear();
 
+        // 1: Spin each reel until it lands on an icon
         foreach (Reel reel in activeReels)
         {
             int reelIconSize = reel.reelIcons.Count;
@@ -55,12 +56,13 @@ public class SlotMachineLogic : MonoBehaviour
         }
 
         PrintResult();
+        
+        // 2: Check if winning combination
     }
 
     public void PrintResult()
     {
         string result = "Result: | ";
-        Debug.Log(spinResult.Count);
         foreach (ReelIcons icon in spinResult)
         {
             result += icon + " | ";

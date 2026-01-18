@@ -4,5 +4,8 @@
     Snake,
     Bread,
     Fish,
-    SixSeven
+    SixSeven,
+    PepperMan,
+    Mouth,
+    CarKey
 }
