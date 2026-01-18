@@ -1,19 +1,33 @@
-using System.Collections;
 using UnityEngine;
 
 public class HandScript : MonoBehaviour
 {
+    private Animator animator;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    IEnumerator Start()
+    void Start()
     {
-        var animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
+    }
 
-        yield return new WaitForSeconds(1);
+    public void Pull()
+    {
         animator.SetTrigger("Pull");
+    }
 
-        yield return new WaitForSeconds(5);
+    public void Return()
+    {
         animator.SetTrigger("Return");
     }
+
+
+    private int fingers = 5;
+
+    public void Cut()
+    {
+
+    }
+
 
     // Update is called once per frame
     void Update()
