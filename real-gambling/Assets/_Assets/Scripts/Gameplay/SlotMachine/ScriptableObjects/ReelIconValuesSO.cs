@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ReelIconValuesSO", menuName = "Project SOs/ReelIconValuesSO")]
 public class ReelIconValuesSO : SerializedScriptableObject
 {
-    [SerializeField] private List<ReelIcons> iconRanks;
-    [SerializeField] private Dictionary<ReelIcons, IconValues> reelValues;
+    [SerializeField] private List<ReelIcons> ranks;
+    [SerializeField] private Dictionary<ReelIcons, IconValues> values;
 
-    public List<ReelIcons> IconRanks => iconRanks;
-    public Dictionary<ReelIcons, IconValues> ReelValues => reelValues;
+    public List<ReelIcons> Ranks => ranks;
+    public Dictionary<ReelIcons, IconValues> Values => values;
 }

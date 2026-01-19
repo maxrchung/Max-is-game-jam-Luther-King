@@ -87,7 +87,7 @@ public class Reel
         HashSet<int> selectedIndices = new HashSet<int>();
         int index = Random.Range(0, iconsOnReel.Count);
 
-        List<ReelIcons> ranks = SOReferences.Instance.Icons.IconRanks;
+        List<ReelIcons> ranks = SOReferences.Instance.Icons.Ranks;
 
         // while not all indices have been checked, and current index points at no icon or max rank icon
         while

@@ -186,29 +186,34 @@ public class GameSystem : MonoBehaviour
                 return;
         }
 
-        int matches = CheckMatches(combinationsToCheck);
-        Debug.Log(matches);
+        List<Match> matches = CheckMatches(combinationsToCheck);
 
-        // 4: Do something with the matches
+        // 4: Score matches
         // - Count the icons that matched?
         // - Check icon attributes
         // - Add back to money
+        int spinScore = ScoreMatches(matches);
+        MoneyAmount += spinScore;
+        
         AfterPlayerAction();
     }
 
-    private int CheckMatches(List<WinningCombinationSO> combinationsToCheck)
+    private List<Match> CheckMatches(List<WinningCombinationSO> combinationsToCheck)
     {
-        int matches = 0;
+        List<Match> matchList = new List<Match>();
+        List<Vector2Int> matchPositions = new List<Vector2Int>();
 
         // iterate across board
         int boardHeight = reelsAsBoard.GetLength(0);
         int boardWidth = reelsAsBoard.GetLength(1);
         for (int boardRow = 0; boardRow < boardHeight; boardRow++)
+        {
             for (int boardCol = 0; boardCol < boardWidth; boardCol++)
             {
                 // iterate through all combos
                 foreach (WinningCombinationSO combo in combinationsToCheck)
                 {
+                    matchPositions.Clear();
                     // if there isn't enough space to check this combo, skip
                     if (boardRow + combo.Height > boardHeight || boardCol + combo.Width > boardWidth)
                         continue;
@@ -233,6 +238,8 @@ public class GameSystem : MonoBehaviour
                                 isValid = false;
                                 break;
                             }
+
+                            matchPositions.Add(new Vector2Int(boardRow , boardCol));
                         }
 
                         // leave pattern early if the pattern was broken
@@ -242,13 +249,48 @@ public class GameSystem : MonoBehaviour
 
                     // if the entire pattern was iterated through and remained valid, count
                     if (isValid)
-                        matches++;
+                    {
+                        // int[,] positions =
+                        Vector2Int[] positions = new Vector2Int[matchPositions.Count];
+                        matchPositions.CopyTo(positions);
+                        matchList.Add(new Match(combo, positions));
+                    }
                 }
             }
+        }
 
-        return matches;
+        return matchList;
     }
 
+    private int ScoreMatches(List<Match> matches)
+    {
+        int totalScore = 0;
+        
+        foreach (var match in matches)
+        {
+            // TODO: Give the patterns multipliers/bonus score
+            // TODO: Upgrade the reel
+            // for now, we're doing linear addition
+            // could spice it up with:
+            // amount of icons in one match -- the more icons in a match, the higher it scales
+            // amount of matches in one spin -- the more matches, the higher it scales
+            // difficulty of pattern -- the rarer the pattern, the bigger the multiplier
+            
+            Debug.Log(match.pattern.name);
+            foreach (var position in match.matchPositions)
+            {
+                Debug.Log($"position: {position}");
+                ReelIcons icon = reelsAsBoard[position.x, position.y];
+                totalScore += SOReferences.Instance.Icons.Values[icon].PointAmount;
+                Debug.Log($"{icon}, {SOReferences.Instance.Icons.Values[icon].PointAmount}");
+            }
+            Debug.Log($"score after combo: {totalScore}");
+        }
+        Debug.Log($"{matches.Count} matches made, {totalScore} money earned");
+
+        return totalScore;
+    }
+    
     public void OnTradeFingerButtonPressed()
     {
         hand.Cut(); // Money added in HandScript

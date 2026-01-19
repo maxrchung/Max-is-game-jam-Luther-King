@@ -16,7 +16,7 @@ public class UIReel : MonoBehaviour
 
         for (int i = 0; i < icons.Count; i++)
         {
-            iconImages[i].sprite = SOReferences.Instance.Icons.ReelValues[icons[i]].iconSprite;
+            iconImages[i].sprite = SOReferences.Instance.Icons.Values[icons[i]].iconSprite;
         }
     }
     
