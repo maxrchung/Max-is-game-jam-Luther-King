@@ -74,9 +74,10 @@ public class Reel
         // currentIndex %= iconsOnReel.Count;
         
         // decrement, because the Reel spins down
-        currentIndex -= spinSteps;
-
-        while (currentIndex < 0)
+        // take the number of steps and modulo it; on a reel size of 4, moving down 5 is the same as moving down 1
+        int actualSteps = spinSteps % iconsOnReel.Count;
+        currentIndex -= actualSteps;
+        if (currentIndex < 0)
         {
             currentIndex += iconsOnReel.Count;
         }
