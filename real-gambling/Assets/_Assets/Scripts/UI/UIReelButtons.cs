@@ -34,12 +34,12 @@ public class UIReelSpinButton : MonoBehaviour
 
     public void OnUnlockButtonClicked()
     {
-        if (PrototypeGameSystem.Instance.TrySubtractMoney(unlockAmount))
+        if (GameSystem.Instance.TrySubtractMoney(unlockAmount))
         {
             isLocked = false;
             ToggleActive(isLocked);
-            PrototypeGameSystem.Instance.CreateReel();
-            PrototypeGameSystem.Instance.AfterPlayerAction();
+            GameSystem.Instance.CreateReel();
+            GameSystem.Instance.AfterPlayerAction();
         }
     }
 

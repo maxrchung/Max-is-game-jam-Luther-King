@@ -4,11 +4,10 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class PrototypeGameSystem : MonoBehaviour
+public class GameSystem : MonoBehaviour
 {
     [Header("UI Objects")]
     [SerializeField] private TextMeshProUGUI moneyCounter;
-    [SerializeField] private UICounter fingerCounter;
 
     [Space]
     [SerializeField] private List<UIReelSpinButton> reelSpinButtons;
@@ -18,15 +17,9 @@ public class PrototypeGameSystem : MonoBehaviour
     [SerializeField] private List<UIReel> uiReels;
 
     [Space]
-    [SerializeField] private UIBetField betField;
-
-    [Space]
     [SerializeField] private Button tradeFingerButton;
     [SerializeField] private Button playButton;
-    [SerializeField] private TMP_Text playButtonText;
-
-    [Space]
-    [SerializeField] private TextBox textBox;
+    [SerializeField] private TMP_Text playCostText;
 
     public HandScript hand;
 
@@ -39,7 +32,7 @@ public class PrototypeGameSystem : MonoBehaviour
     private List<Reel> reelInstances;
     private ReelIcons[,] reelsAsBoard;
 
-    private static PrototypeGameSystem instance;
+    private static GameSystem instance;
 
     public int MoneyAmount
     {
@@ -56,12 +49,21 @@ public class PrototypeGameSystem : MonoBehaviour
         get => fingerAmount;
         set
         {
-            //fingerAmount = value;
-            //fingerCounter.SetAmountText(fingerAmount.ToString());
+            fingerAmount = value;
         }
     }
 
-    public static PrototypeGameSystem Instance => instance;
+    public int CostToPlay
+    {
+        get => costToPlay;
+        set
+        {
+            costToPlay = value;
+            playCostText.text = costToPlay.ToString() + "$";
+        }
+    }
+    
+    public static GameSystem Instance => instance;
 
     public void Awake()
     {
@@ -77,18 +79,16 @@ public class PrototypeGameSystem : MonoBehaviour
 
     public void Start()
     {
-        MoneyAmount = 10;
+        MoneyAmount = 0;
         FingerAmount = 5;
-        costToPlay = 1;
+        CostToPlay = 1;
         reelInstances = new List<Reel>();
 
         foreach (var reelSpinButton in reelSpinButtons)
         {
             reelSpinButton.Initialize();
         }
-        //betField.ResetText();
 
-        CreateReel();
         CreateReel();
         CreateReel();
         AfterPlayerAction();
@@ -102,47 +102,42 @@ public class PrototypeGameSystem : MonoBehaviour
 
     public void AfterPlayerAction()
     {
-        //playButtonText.text = $"PLAY\n(${costToPlay})";
-        //if (moneyAmount < costToPlay)
-        //{ // edge case, out of money
-        //    playButton.interactable = false;
+        playCostText.text = $"PLAY\n({costToPlay}$)";
+        if (moneyAmount < costToPlay)
+        { // edge case, out of money
+            playButton.interactable = false;
 
-        //    if (fingerAmount == 0)
-        //    {
-        //        textBox.SetText("Yer outta money and fingers.\n\nGAME OVER!");
-        //        textBox.MoveBox(screenCenter);
-        //        textBox.ToggleVisibility(true);
-        //    }
-        //    else
-        //    {
-        //        textBox.SetText("Yer outta money.\n\nGive me a finger fer more!");
-        //        textBox.MoveBox(screenCenter);
-        //        textBox.ToggleVisibility(true);
-        //        tradeFingerButton.interactable = true;
-        //    }
+            if (fingerAmount > 0)
+            {
+                hand.Cut();   
+            }
+            else
+            {
+                // Game Over -- Handled by HandScript
+            }
 
-        //    return;
-        //}
+            return;
+        }
 
         //tradeFingerButton.interactable = false;
         //if (reelSpinButtons[2].IsLocked)
         //{
-        //    // edge case, game start -- need third reel
-        //    textBox.SetText("Ya need at least three reels to play.\n\nBuy one now!");
-        //    textBox.MoveBox(screenCenter + new Vector2(150, 300));
-        //    textBox.ToggleVisibility(true);
+        //    // TODO: edge case, game start -- need third reel
         //    playButton.interactable = false;
         //    return;
         //}
 
         // Main gameplay
-        //textBox.ToggleVisibility(false);
         playButton.interactable = true;
     }
 
     public void OnPlayButtonPressed()
     {
-
+        if (reelInstances.Count < 3)
+        {
+            return;
+        }
+        
         // 1: Check player's money and subtract if enough
         if (moneyAmount < costToPlay)
         {
@@ -229,16 +224,12 @@ public class PrototypeGameSystem : MonoBehaviour
                             // continue to next square if there is no icon set
                             // in the inspector, the axes are switched
                             if (!combo.Pattern[comboCol, comboRow])
-                            {
-                                Debug.Log("going next");
                                 continue;
-                            }
 
                             // if the board doesn't have an icon, exit loop early
                             // [y, x] = board's top left corner; add u and v to iterate with pattern
                             if (reelsAsBoard[boardRow + comboRow, boardCol + comboCol] == ReelIcons.None)
                             {
-                                Debug.Log("invalid");
                                 isValid = false;
                                 break;
                             }
@@ -251,10 +242,7 @@ public class PrototypeGameSystem : MonoBehaviour
 
                     // if the entire pattern was iterated through and remained valid, count
                     if (isValid)
-                    {
-                        Debug.Log($"VALID MATCH for {combo.name} at [{boardRow}, {boardCol}]");
                         matches++;
-                    }
                 }
             }
 
@@ -263,10 +251,8 @@ public class PrototypeGameSystem : MonoBehaviour
 
     public void OnTradeFingerButtonPressed()
     {
-        if (!TrySubtractFingers(1))
-            return;
+        hand.Cut(); // Money added in HandScript
 
-        MoneyAmount += 10;
         AfterPlayerAction();
     }
 

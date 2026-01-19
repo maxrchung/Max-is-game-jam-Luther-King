@@ -48,21 +48,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8727288661827907393}
     m_Modifications:
-    - target: {fileID: 513317181170152293, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 513317181170152293, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 150
-      objectReference: {fileID: 0}
     - target: {fileID: 3684713566271320823, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_Name
       value: UIReel1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5293119234401391029, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
-      propertyPath: m_Name
-      value: ReelBGImage
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_Pivot.x
@@ -90,11 +78,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 150
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 550
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_LocalPosition.x
@@ -162,21 +150,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8727288661827907393}
     m_Modifications:
-    - target: {fileID: 513317181170152293, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 513317181170152293, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 150
-      objectReference: {fileID: 0}
     - target: {fileID: 3684713566271320823, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_Name
       value: UIReel4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5293119234401391029, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
-      propertyPath: m_Name
-      value: ReelBGImage
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_Pivot.x
@@ -204,11 +180,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 150
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 550
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_LocalPosition.x
@@ -276,21 +252,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8727288661827907393}
     m_Modifications:
-    - target: {fileID: 513317181170152293, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 513317181170152293, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 150
-      objectReference: {fileID: 0}
     - target: {fileID: 3684713566271320823, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_Name
       value: UIReel2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5293119234401391029, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
-      propertyPath: m_Name
-      value: ReelBGImage
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_Pivot.x
@@ -318,11 +282,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 150
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 550
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_LocalPosition.x
@@ -390,21 +354,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8727288661827907393}
     m_Modifications:
-    - target: {fileID: 513317181170152293, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 513317181170152293, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 150
-      objectReference: {fileID: 0}
     - target: {fileID: 3684713566271320823, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_Name
       value: UIReel3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5293119234401391029, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
-      propertyPath: m_Name
-      value: ReelBGImage
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_Pivot.x
@@ -432,11 +384,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 150
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 550
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_LocalPosition.x
@@ -504,21 +456,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8727288661827907393}
     m_Modifications:
-    - target: {fileID: 513317181170152293, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 513317181170152293, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 150
-      objectReference: {fileID: 0}
     - target: {fileID: 3684713566271320823, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_Name
       value: UIReel5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5293119234401391029, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
-      propertyPath: m_Name
-      value: ReelBGImage
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_Pivot.x
@@ -546,11 +486,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 150
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 550
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 5602578090508879991, guid: b8465d8ab5f4a2b49afca39fe3583336, type: 3}
       propertyPath: m_LocalPosition.x

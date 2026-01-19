@@ -11,23 +11,12 @@ public class HandScript : MonoBehaviour
     public Image EndPanel;
     public Text[] EndTexts;
 
-    public TextMeshProUGUI MoneyText;
-    public TextMeshProUGUI PullText;
-
     private Animator animator;
 
-    private int money = 0;
-    private int pullCost = 1;
-
-    private int fingers = 5;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         animator = GetComponent<Animator>();
-        MoneyText.text = money.ToString() + "$";
-        PullText.text = pullCost.ToString() + "$";
-        Cut();
     }
 
     public void Pull()
@@ -57,7 +46,7 @@ public class HandScript : MonoBehaviour
 
     public void Die()
     {
-        fingers = 1;
+        GameSystem.Instance.FingerAmount = 1;
         StartCoroutine(CutCoroutine());
     }
 
@@ -70,26 +59,26 @@ public class HandScript : MonoBehaviour
 
         var materials = Renderer.materials;
         // Has to match material slots
-        materials[fingers] = Transparent;
+        materials[GameSystem.Instance.FingerAmount] = Transparent;
         Renderer.materials = materials;
 
-        fingers = fingers - 1;
+        GameSystem.Instance.FingerAmount--;
 
         // End game
-        if (fingers == 0)
+        if (GameSystem.Instance.FingerAmount == 0)
         {
             StartCoroutine(EndGame());
         }
         else
         {
-            money += 10;
-            MoneyText.text = money.ToString() + "$";
+            GameSystem.Instance.MoneyAmount += 10;
             StartCoroutine(FlashRed());
 
             // After red flash, return hand back
             yield return new WaitForSeconds(1);
 
             animator.SetTrigger("Unview");
+            GameSystem.Instance.AfterPlayerAction();
         }
     }
 
@@ -154,20 +143,11 @@ public class HandScript : MonoBehaviour
 
     public void Buy()
     {
-        money = money - 1;
-        MoneyText.text = money.ToString() + "$";
+        GameSystem.Instance.MoneyAmount -= 1;
     }
 
     public void Gain()
     {
-        money = money + 2;
-        MoneyText.text = money.ToString() + "$";
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        GameSystem.Instance.MoneyAmount += 2;
     }
 }
