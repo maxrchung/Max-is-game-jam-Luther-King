@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,12 +10,17 @@ public class HandScript : MonoBehaviour
     public Image RedPanel;
     public Text[] Texts;
 
+    public TextMeshProUGUI MoneyText;
+
     private Animator animator;
+
+    private int money = 10;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         animator = GetComponent<Animator>();
+        MoneyText.text = money.ToString() + "$";
     }
 
     public void Pull()
@@ -140,6 +146,19 @@ public class HandScript : MonoBehaviour
             yield return null;
         }
     }
+
+    public void Buy()
+    {
+        money = money - 1;
+        MoneyText.text = money.ToString() + "$";
+    }
+
+    public void Gain()
+    {
+        money = money + 2;
+        MoneyText.text = money.ToString() + "$";
+    }
+
 
     // Update is called once per frame
     void Update()
