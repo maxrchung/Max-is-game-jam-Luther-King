@@ -11,28 +11,13 @@ public class SlotMachineLogic : MonoBehaviour
         spinResult = new List<ReelIcons>();
         activeReels = new List<Reel>();
 
-        Reel reelOne = new Reel();
-        Reel reelTwo = new Reel();
-        Reel reelThree = new Reel();
+        Reel reelOne = new Reel(6, 8, 12);
+        Reel reelTwo = new Reel(6, 8, 12);
+        Reel reelThree = new Reel(6, 8, 12);
 
         activeReels = new List<Reel>()
         {
             reelOne, reelTwo, reelThree
-        };
-
-        reelOne.reelIcons = new List<ReelIcons>()
-        {
-            ReelIcons.Bread, ReelIcons.None, ReelIcons.Fish, ReelIcons.None, ReelIcons.Snake, ReelIcons.None
-        };
-
-        reelTwo.reelIcons = new List<ReelIcons>()
-        {
-            ReelIcons.Bread, ReelIcons.Fish, ReelIcons.Fish, ReelIcons.None, ReelIcons.Snake, ReelIcons.Bread
-        };
-
-        reelThree.reelIcons = new List<ReelIcons>()
-        {
-            ReelIcons.Fish, ReelIcons.None, ReelIcons.Snake, ReelIcons.SixSeven, ReelIcons.Bread, ReelIcons.Bread
         };
     }
 
@@ -43,16 +28,16 @@ public class SlotMachineLogic : MonoBehaviour
         // 1: Spin each reel until it lands on an icon
         foreach (Reel reel in activeReels)
         {
-            int reelIconSize = reel.reelIcons.Count;
+            int reelIconSize = reel.IconsOnReel.Count;
             int resultIndex = Random.Range(0, reelIconSize);
             
-            while (reel.reelIcons[resultIndex] == ReelIcons.None)
+            while (reel.IconsOnReel[resultIndex] == ReelIcons.None)
             {
                 resultIndex++;
                 resultIndex %= reelIconSize;
             }
             
-            spinResult.Add(reel.reelIcons[resultIndex]);
+            spinResult.Add(reel.IconsOnReel[resultIndex]);
         }
 
         PrintResult();
