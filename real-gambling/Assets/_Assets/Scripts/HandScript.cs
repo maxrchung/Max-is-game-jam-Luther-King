@@ -12,10 +12,13 @@ public class HandScript : MonoBehaviour
     public Text[] EndTexts;
 
     public TextMeshProUGUI MoneyText;
+    public TextMeshProUGUI PullText;
 
     private Animator animator;
 
-    private int money = 10;
+    private int money = 0;
+    private int pullCost = 1;
+
     private int fingers = 5;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,14 +26,20 @@ public class HandScript : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         MoneyText.text = money.ToString() + "$";
+        PullText.text = pullCost.ToString() + "$";
         Cut();
     }
 
     public void Pull()
     {
-        money = money - 1;
+        money = money - pullCost;
         MoneyText.text = money + "$";
         animator.SetTrigger("Pull");
+
+        if (money < 0)
+        {
+            Cut();
+        }
     }
 
     public void Return()
@@ -80,6 +89,8 @@ public class HandScript : MonoBehaviour
         }
         else
         {
+            money += 10;
+            MoneyText.text = money.ToString() + "$";
             StartCoroutine(FlashRed());
 
             // After red flash, return hand back
