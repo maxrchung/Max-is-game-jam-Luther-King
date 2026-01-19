@@ -7,6 +7,7 @@ public class HandScript : MonoBehaviour
     public SkinnedMeshRenderer Renderer;
     public Material Transparent;
     public Image RedPanel;
+    public Text[] Texts;
 
     private Animator animator;
 
@@ -45,57 +46,99 @@ public class HandScript : MonoBehaviour
         StartCoroutine(CutCoroutine());
     }
 
+    public void Die()
+    {
+        fingers = 1;
+        StartCoroutine(CutCoroutine());
+    }
+
     public IEnumerator CutCoroutine()
     {
         animator.SetTrigger("View");
 
+        // Wait for hand to come into view
         yield return new WaitForSeconds(2);
 
-
         var materials = Renderer.materials;
-        if (fingers == 5)
-        {
-            materials[5] = Transparent;
-        }
-        else if (fingers == 4)
-        {
-            materials[4] = Transparent;
-        }
-        else if (fingers == 3)
-        {
-            materials[3] = Transparent;
-        }
-        else if (fingers == 2)
-        {
-            materials[2] = Transparent;
-        }
-        else if (fingers == 1)
-        {
-            // Lose
-            materials[1] = Transparent;
-        }
-
+        // Has to match material slots
+        materials[fingers] = Transparent;
         Renderer.materials = materials;
 
         fingers = fingers - 1;
 
+        // End game
+        if (fingers == 0)
+        {
+            StartCoroutine(EndGame());
+        }
+        else
+        {
+            StartCoroutine(FlashRed());
+
+            // After red flash, return hand back
+            yield return new WaitForSeconds(1);
+
+            animator.SetTrigger("Unview");
+        }
+    }
+
+    private IEnumerator FlashRed()
+    {
         // Flash red
         Color color = RedPanel.color;
-        color.a = 0.75f; // Fully visible
+        color.a = 0.9f; // Fully visible
         RedPanel.color = color;
         var time = 0f;
         while (time < 1f)
         {
             time += Time.deltaTime / 1f; // Fade over one second
-            color.a = Mathf.Lerp(0.75f, 0f, time);
+            color.a = Mathf.Lerp(0.9f, 0, time);
             RedPanel.color = color;
             yield return null;
         }
         color.a = 0;
         RedPanel.color = color;
+    }
 
+    private IEnumerator EndGame()
+    {
+        // Flash red
+        Color color = RedPanel.color;
+        var time = 0f;
+        while (time < 1f)
+        {
+            time += Time.deltaTime / 1f;
+            color.a = Mathf.Lerp(0, 1f, time);
+            RedPanel.color = color;
+            yield return null;
+        }
         yield return new WaitForSeconds(1);
-        animator.SetTrigger("Unview");
+
+        color = Texts[0].color;
+        color.a = 1;
+        Texts[0].color = color;
+
+        yield return new WaitForSeconds(2);
+
+        time = 0f;
+        color = Texts[1].color;
+        while (time < 1f)
+        {
+            time += Time.deltaTime / 0.67f;
+            color.a = Mathf.Lerp(0, 1f, time);
+            Texts[1].color = color;
+            yield return null;
+        }
+
+        time = 0f;
+        color = Texts[2].color;
+        while (time < 1f)
+        {
+            time += Time.deltaTime / 0.69f;
+            color.a = Mathf.Lerp(0, 1f, time);
+            Texts[2].color = color;
+            yield return null;
+        }
     }
 
     // Update is called once per frame
