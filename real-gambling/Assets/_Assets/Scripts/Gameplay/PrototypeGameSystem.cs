@@ -1,25 +1,24 @@
 using DG.Tweening.Core.Easing;
-using GambleCore;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using GambleCore.Interface;
-using GambleCore.Util;
 using System.Collections.Generic;
 using System.Linq;
-using GambleCore.Gambling;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class PrototypeGameSystem : MonoBehaviour
 {
+    [Header("UI Objects")]
     [SerializeField] private UICounter moneyCounter;
     [SerializeField] private UICounter fingerCounter;
 
     [Space]
     [SerializeField] private List<UIReelSpinButton> reelSpinButtons;
 
+    [FormerlySerializedAs("reels")]
     [Space]
-    [SerializeField] private List<UIReel> reels;
+    [SerializeField] private List<UIReel> uiReels;
 
     [Space]
     [SerializeField] private UIBetField betField;
@@ -32,21 +31,15 @@ public class PrototypeGameSystem : MonoBehaviour
     [Space]
     [SerializeField] private TextBox textBox;
 
-    [Space]
-    [SerializeField] private ReelIconValuesSO iconSO;
-
     private int moneyAmount;
     private int fingerAmount;
     private int costToPlay;
-
-    // START BLOCK -- gambling controller fields
-    private GamblingController _gamblingController;
-    private IGamblingBoard _board;
-    private List<GamblingWheelController> wheels;
-    private Matcher _matcher;
-
+    
     private Vector2 screenCenter = new Vector2(960, 510);
 
+    private List<Reel> reelInstances;
+    private ReelIcons[,] reelsAsBoard;
+    
     private static PrototypeGameSystem instance;
 
     public int MoneyAmount
@@ -85,13 +78,10 @@ public class PrototypeGameSystem : MonoBehaviour
 
     public void Start()
     {
-        _gamblingController = new GamblingController();
-        _board = _gamblingController.CreateBoard(0);
-        wheels = new List<GamblingWheelController>();
-        
-        MoneyAmount = 10;
+        MoneyAmount = 0;
         FingerAmount = 5;
         costToPlay = 1;
+        reelInstances = new List<Reel>();
 
         foreach (var reelSpinButton in reelSpinButtons)
         {
@@ -99,24 +89,15 @@ public class PrototypeGameSystem : MonoBehaviour
         }
         betField.ResetText();
         
-        CreateWheel();
-        CreateWheel();
-        // DEBUG HERE
-        // CreateWheel();
-        // Debug.Log(_board.ToString());
-        // _matcher = _board.BuildCurrentMatcher();
-        // var matches = _matcher.Match(Pattern.PatternLine);
-        // Debug.Log(matches.Length);
+        CreateReel();
+        CreateReel();
         AfterPlayerAction();
     }
 
-    public void CreateWheel()
+    public void CreateReel()
     {
-        string seedName = "GamblingWheel"  /** + wheels.Count*/;
-        var rng = DeterministicRng.CreateStream(0, seedName);
-        wheels.Add(new GamblingWheelController());
-        wheels[^1].RandomizeSymbols(rng);
-        _board.AddWheel(wheels[^1]);
+        Reel newReel = new Reel(6, 8, 12);
+        reelInstances.Add(newReel);
     }
     
     public void AfterPlayerAction()
@@ -161,6 +142,7 @@ public class PrototypeGameSystem : MonoBehaviour
 
     public void OnPlayButtonPressed()
     {
+        // 1: Check player's money and subtract if enough
         if (moneyAmount < costToPlay)
         {
             return;    
@@ -168,23 +150,112 @@ public class PrototypeGameSystem : MonoBehaviour
 
         MoneyAmount -= costToPlay;
         
-        // stub
-        var steps = _board.GetRandomSteps();
-        _board.PerformSteps(steps);
-
-        for (int i = 0; i < wheels.Count; i++)
+        // 2: Spin the reel
+        reelsAsBoard = new ReelIcons[5, reelInstances.Count];
+        for (int i = 0; i < reelInstances.Count; i++)
         {
-            var wheelSprites = wheels[i].ShownSymbols.Select(symbol => iconSO.ReelValues[((ReelIconAdapter)symbol).Value].iconSprite);
-            reels[i].DisplayIcons(wheelSprites.ToArray());
+            int iconSteps = Random.Range(100, 150);
+            reelInstances[i].SpinReel(iconSteps);
+            
+            // 3: Display results of reel
+            List<ReelIcons> reelResults = reelInstances[i].GetIcons(5);
+            uiReels[i].DisplayIcons(reelResults);
+
+            for (int y = 0; y < reelResults.Count; y++)
+            {
+                reelsAsBoard[y,i] = reelResults[y];
+            }
+        }
+        
+        // 3: Check for winning combinations
+        List<WinningCombinationSO> combinationsToCheck;
+
+        switch (reelInstances.Count)
+        {
+            case 3:
+                combinationsToCheck = SOReferences.Instance.Combinations.ThreeReelCombinations;
+                break;
+            case 4:
+                combinationsToCheck = SOReferences.Instance.Combinations.FourReelCombinations;
+                break;
+            case 5:
+                combinationsToCheck = SOReferences.Instance.Combinations.FiveReelCombinations;
+                break;
+            default:
+                Debug.LogError($"{reelInstances.Count} not supported for checking");
+                return;
         }
 
-        Debug.Log(_board.ToString());
-        _matcher = _board.BuildCurrentMatcher();
-        var matches = _matcher.Match(Pattern.PatternLine);
-        Debug.Log(matches.Length);
+        int matches = CheckMatches(combinationsToCheck);
+        Debug.Log(matches);
+        
+        // 4: Do something with the matches
+        // - Count the icons that matched?
+        // - Check icon attributes
+        // - Add back to money
         AfterPlayerAction();
     }
 
+    private int CheckMatches(List<WinningCombinationSO> combinationsToCheck)
+    {
+        int matches = 0;
+        
+        // iterate across board
+        int boardHeight = reelsAsBoard.GetLength(0);
+        int boardWidth = reelsAsBoard.GetLength(1);
+        for (int boardRow = 0; boardRow < boardHeight; boardRow++)
+        for (int boardCol = 0; boardCol < boardWidth; boardCol++)
+        {
+            // iterate through all combos
+            foreach (WinningCombinationSO combo in combinationsToCheck)
+            {
+                // if there isn't enough space to check this combo, skip
+                if (boardRow + combo.Height > boardHeight || boardCol + combo.Width > boardWidth)
+                    continue;
+
+                bool isValid = true;
+                
+                // iterate through all of pattern's squares
+                for (int comboRow = 0; comboRow < combo.Height; comboRow++)
+                {
+                    for (int comboCol = 0; comboCol < combo.Width; comboCol++)
+                    {
+                        
+                        // continue to next square if there is no icon set
+                        // in the inspector, the axes are switched
+                        if (!combo.Pattern[comboCol, comboRow])
+                        {
+                            Debug.Log("going next");
+                            continue;
+                        }
+
+                        // if the board doesn't have an icon, exit loop early
+                        // [y, x] = board's top left corner; add u and v to iterate with pattern
+                        if (reelsAsBoard[boardRow + comboRow, boardCol + comboCol] == ReelIcons.None)
+                        {
+                            Debug.Log("invalid");
+                            isValid = false;
+                            break;
+                        }
+                    }
+
+                    // leave pattern early if the pattern was broken
+                    if (!isValid)
+                        break;
+                }
+
+                // if the entire pattern was iterated through and remained valid, count
+                if (isValid)
+                {
+                    Debug.Log($"VALID MATCH for {combo.name} at [{boardRow}, {boardCol}]");
+                    matches++;
+                }
+            }
+        }
+
+        return matches;
+    }
+    
     public void OnTradeFingerButtonPressed()
     {
         if (!TrySubtractFingers(1))

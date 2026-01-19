@@ -1,8 +1,4 @@
-﻿using GambleCore;
-using GambleCore.Interface;
-using GambleCore.Util;
-
-public enum ReelIcons
+﻿public enum ReelIcons
 {
     None,
     Snake,
@@ -12,13 +8,4 @@ public enum ReelIcons
     PepperMan,
     Mouth,
     CarKey
-}
-
-public class ReelIconAdapter : GambleEnumSymbol<ReelIcons>
-{
-    public ReelIconAdapter(ReelIcons value) : base(value)
-    {
-    }
-
-    public static ReelIconAdapter Random(IRng rng) => new ReelIconAdapter(rng.NextEnum<ReelIcons>());
 }

@@ -38,7 +38,7 @@ public class UIReelSpinButton : MonoBehaviour
         {
             isLocked = false;
             ToggleActive(isLocked);
-            PrototypeGameSystem.Instance.CreateWheel();
+            PrototypeGameSystem.Instance.CreateReel();
             PrototypeGameSystem.Instance.AfterPlayerAction();
         }
     }

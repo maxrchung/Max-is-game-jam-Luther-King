@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2a5a8efb98f39b44a716cef0f16ec61, type: 3}
-  m_Name: ReelIconValuesSO
+  m_Name: Reel Icon Values
   m_EditorClassIdentifier: Assembly-CSharp::ReelIconValuesSO
   serializationData:
     SerializedFormat: 2
@@ -247,3 +247,4 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+  iconRanks: 0000000001000000020000000300000004000000050000000600000007000000

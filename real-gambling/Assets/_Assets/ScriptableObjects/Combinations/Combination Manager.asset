@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08737811f7f3be142a474a0c90da5354, type: 3}
+  m_Name: Combination Manager
+  m_EditorClassIdentifier: Assembly-CSharp::CombinationManagerSO
+  threeReelCombinations:
+  - {fileID: 11400000, guid: b99de74bace3b2b4abf1501813dad6ac, type: 2}
+  - {fileID: 11400000, guid: 58da7503cee481049b53b4119a6ce175, type: 2}
+  - {fileID: 11400000, guid: df740159744122f4bbc737878d462cee, type: 2}
+  - {fileID: 11400000, guid: e7ea3531d8dea594d9e2adf779065d6d, type: 2}
+  fourReelCombinations:
+  - {fileID: 11400000, guid: 9b1692c9524317e4ca0fe6285b64420c, type: 2}
+  - {fileID: 11400000, guid: d38e845cb63cf8b41a07b1518c7523c7, type: 2}
+  - {fileID: 11400000, guid: 15f517f38befece4d9beb1355715f3b6, type: 2}
+  - {fileID: 11400000, guid: 01263a21e536ea0419594b17149ec196, type: 2}
+  fiveReelCombinations:
+  - {fileID: 11400000, guid: 514ee7b4fe7781f48adcb2f44bd4f625, type: 2}
+  - {fileID: 11400000, guid: 95fcb3c3a8d5c1e4b95f84fbee47b7e9, type: 2}
+  - {fileID: 11400000, guid: 8cb7923c5960e7344814dfa9a78c588f, type: 2}
+  - {fileID: 11400000, guid: f10958c96c6cbbf49a29a8fa0ed61221, type: 2}

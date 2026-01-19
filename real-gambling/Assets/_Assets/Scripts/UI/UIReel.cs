@@ -7,6 +7,19 @@ public class UIReel : MonoBehaviour
     [SerializeField] private Image bgImage;
     [Space] [SerializeField] private List<Image> iconImages;
 
+    public void DisplayIcons(List<ReelIcons> icons)
+    {
+        if (icons.Count != 5)
+        {
+            Debug.LogError($"Icons size is not 5, it is {icons.Count}");
+        }
+
+        for (int i = 0; i < icons.Count; i++)
+        {
+            iconImages[i].sprite = SOReferences.Instance.Icons.ReelValues[icons[i]].iconSprite;
+        }
+    }
+    
     public void DisplayIcons(Sprite[] icons)
     {
         if (icons.Length != 5)
