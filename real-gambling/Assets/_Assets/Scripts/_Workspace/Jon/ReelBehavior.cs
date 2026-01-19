@@ -29,7 +29,7 @@ public class ReelBehavior : MonoBehaviour
             
             Debug.Log($"currentDegrees: {currentDegrees}, degreesToRadian: {degreesToRadian}, xPos: {xPos}, zPos: {zPos}");
             
-            Vector3 iconPosition = new Vector3(xPos, 0, zPos);
+            Vector3 iconPosition = transform.localPosition + new Vector3(xPos, 0, zPos);
             Quaternion iconRotation = Quaternion.Euler(new Vector3(0, currentDegrees, 0));
             Debug.Log($"reelPosition: {iconPosition}");
             GameObject reelIconGO = Instantiate(reelIconGOPrefab, iconPosition, iconRotation, reelGO.transform);

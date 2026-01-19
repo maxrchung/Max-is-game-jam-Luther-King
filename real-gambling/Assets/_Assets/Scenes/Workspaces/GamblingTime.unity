@@ -285,6 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb6467347cf8c4024b69d095932872ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomController
+  wheelPrefab: {fileID: 6274294195970924190, guid: b6ef50832bff32b9882d2da1eb0d36b3, type: 3}
 --- !u!4 &929870616
 Transform:
   m_ObjectHideFlags: 0
