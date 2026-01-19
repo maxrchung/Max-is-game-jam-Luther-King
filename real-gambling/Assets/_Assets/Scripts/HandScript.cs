@@ -16,12 +16,14 @@ public class HandScript : MonoBehaviour
     private Animator animator;
 
     private int money = 10;
+    private int fingers = 5;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         animator = GetComponent<Animator>();
         MoneyText.text = money.ToString() + "$";
+        Cut();
     }
 
     public void Pull()
@@ -45,10 +47,6 @@ public class HandScript : MonoBehaviour
     {
         animator.SetTrigger("Unview");
     }
-
-
-
-    private int fingers = 5;
 
     public void Cut()
     {
