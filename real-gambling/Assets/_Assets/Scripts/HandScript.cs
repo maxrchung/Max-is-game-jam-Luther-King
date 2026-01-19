@@ -32,14 +32,7 @@ public class HandScript : MonoBehaviour
 
     public void Pull()
     {
-        money = money - pullCost;
-        MoneyText.text = money + "$";
         animator.SetTrigger("Pull");
-
-        if (money < 0)
-        {
-            Cut();
-        }
     }
 
     public void Return()

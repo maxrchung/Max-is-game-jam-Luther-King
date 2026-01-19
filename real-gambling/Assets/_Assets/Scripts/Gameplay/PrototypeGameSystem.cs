@@ -1,16 +1,13 @@
-using DG.Tweening.Core.Easing;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
+using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class PrototypeGameSystem : MonoBehaviour
 {
     [Header("UI Objects")]
-    [SerializeField] private UICounter moneyCounter;
+    [SerializeField] private TextMeshProUGUI moneyCounter;
     [SerializeField] private UICounter fingerCounter;
 
     [Space]
@@ -31,15 +28,17 @@ public class PrototypeGameSystem : MonoBehaviour
     [Space]
     [SerializeField] private TextBox textBox;
 
+    public HandScript hand;
+
     private int moneyAmount;
     private int fingerAmount;
     private int costToPlay;
-    
+
     private Vector2 screenCenter = new Vector2(960, 510);
 
     private List<Reel> reelInstances;
     private ReelIcons[,] reelsAsBoard;
-    
+
     private static PrototypeGameSystem instance;
 
     public int MoneyAmount
@@ -48,7 +47,7 @@ public class PrototypeGameSystem : MonoBehaviour
         set
         {
             moneyAmount = value;
-            moneyCounter.SetAmountText("$" + moneyAmount.ToString());
+            moneyCounter.text = moneyAmount.ToString() + "$";
         }
     }
 
@@ -57,8 +56,8 @@ public class PrototypeGameSystem : MonoBehaviour
         get => fingerAmount;
         set
         {
-            fingerAmount = value;
-            fingerCounter.SetAmountText(fingerAmount.ToString());
+            //fingerAmount = value;
+            //fingerCounter.SetAmountText(fingerAmount.ToString());
         }
     }
 
@@ -78,7 +77,7 @@ public class PrototypeGameSystem : MonoBehaviour
 
     public void Start()
     {
-        MoneyAmount = 0;
+        MoneyAmount = 10;
         FingerAmount = 5;
         costToPlay = 1;
         reelInstances = new List<Reel>();
@@ -87,8 +86,9 @@ public class PrototypeGameSystem : MonoBehaviour
         {
             reelSpinButton.Initialize();
         }
-        betField.ResetText();
-        
+        //betField.ResetText();
+
+        CreateReel();
         CreateReel();
         CreateReel();
         AfterPlayerAction();
@@ -99,74 +99,79 @@ public class PrototypeGameSystem : MonoBehaviour
         Reel newReel = new Reel(6, 8, 12);
         reelInstances.Add(newReel);
     }
-    
+
     public void AfterPlayerAction()
     {
-        playButtonText.text = $"PLAY\n(${costToPlay})";
-        if (moneyAmount < costToPlay)
-        { // edge case, out of money
-            playButton.interactable = false;
+        //playButtonText.text = $"PLAY\n(${costToPlay})";
+        //if (moneyAmount < costToPlay)
+        //{ // edge case, out of money
+        //    playButton.interactable = false;
 
-            if (fingerAmount == 0)
-            {
-                textBox.SetText("Yer outta money and fingers.\n\nGAME OVER!");
-                textBox.MoveBox(screenCenter);
-                textBox.ToggleVisibility(true);
-            }
-            else
-            {
-                textBox.SetText("Yer outta money.\n\nGive me a finger fer more!");
-                textBox.MoveBox(screenCenter);
-                textBox.ToggleVisibility(true);
-                tradeFingerButton.interactable = true;
-            }
+        //    if (fingerAmount == 0)
+        //    {
+        //        textBox.SetText("Yer outta money and fingers.\n\nGAME OVER!");
+        //        textBox.MoveBox(screenCenter);
+        //        textBox.ToggleVisibility(true);
+        //    }
+        //    else
+        //    {
+        //        textBox.SetText("Yer outta money.\n\nGive me a finger fer more!");
+        //        textBox.MoveBox(screenCenter);
+        //        textBox.ToggleVisibility(true);
+        //        tradeFingerButton.interactable = true;
+        //    }
 
-            return;
-        }
+        //    return;
+        //}
 
-        tradeFingerButton.interactable = false;
-        if (reelSpinButtons[2].IsLocked)
-        {
-            // edge case, game start -- need third reel
-            textBox.SetText("Ya need at least three reels to play.\n\nBuy one now!");
-            textBox.MoveBox(screenCenter + new Vector2(150, 300));
-            textBox.ToggleVisibility(true);
-            playButton.interactable = false;
-            return;
-        }
+        //tradeFingerButton.interactable = false;
+        //if (reelSpinButtons[2].IsLocked)
+        //{
+        //    // edge case, game start -- need third reel
+        //    textBox.SetText("Ya need at least three reels to play.\n\nBuy one now!");
+        //    textBox.MoveBox(screenCenter + new Vector2(150, 300));
+        //    textBox.ToggleVisibility(true);
+        //    playButton.interactable = false;
+        //    return;
+        //}
 
         // Main gameplay
-        textBox.ToggleVisibility(false);
+        //textBox.ToggleVisibility(false);
         playButton.interactable = true;
     }
 
     public void OnPlayButtonPressed()
     {
+
         // 1: Check player's money and subtract if enough
         if (moneyAmount < costToPlay)
         {
-            return;    
+            return;
         }
 
         MoneyAmount -= costToPlay;
-        
+
+
+        hand.Pull();
+
+
         // 2: Spin the reel
         reelsAsBoard = new ReelIcons[5, reelInstances.Count];
         for (int i = 0; i < reelInstances.Count; i++)
         {
             int iconSteps = Random.Range(100, 150);
             reelInstances[i].SpinReel(iconSteps);
-            
+
             // 3: Display results of reel
             List<ReelIcons> reelResults = reelInstances[i].GetIcons(5);
             uiReels[i].DisplayIcons(reelResults);
 
             for (int y = 0; y < reelResults.Count; y++)
             {
-                reelsAsBoard[y,i] = reelResults[y];
+                reelsAsBoard[y, i] = reelResults[y];
             }
         }
-        
+
         // 3: Check for winning combinations
         List<WinningCombinationSO> combinationsToCheck;
 
@@ -188,7 +193,7 @@ public class PrototypeGameSystem : MonoBehaviour
 
         int matches = CheckMatches(combinationsToCheck);
         Debug.Log(matches);
-        
+
         // 4: Do something with the matches
         // - Count the icons that matched?
         // - Check icon attributes
@@ -199,63 +204,63 @@ public class PrototypeGameSystem : MonoBehaviour
     private int CheckMatches(List<WinningCombinationSO> combinationsToCheck)
     {
         int matches = 0;
-        
+
         // iterate across board
         int boardHeight = reelsAsBoard.GetLength(0);
         int boardWidth = reelsAsBoard.GetLength(1);
         for (int boardRow = 0; boardRow < boardHeight; boardRow++)
-        for (int boardCol = 0; boardCol < boardWidth; boardCol++)
-        {
-            // iterate through all combos
-            foreach (WinningCombinationSO combo in combinationsToCheck)
+            for (int boardCol = 0; boardCol < boardWidth; boardCol++)
             {
-                // if there isn't enough space to check this combo, skip
-                if (boardRow + combo.Height > boardHeight || boardCol + combo.Width > boardWidth)
-                    continue;
-
-                bool isValid = true;
-                
-                // iterate through all of pattern's squares
-                for (int comboRow = 0; comboRow < combo.Height; comboRow++)
+                // iterate through all combos
+                foreach (WinningCombinationSO combo in combinationsToCheck)
                 {
-                    for (int comboCol = 0; comboCol < combo.Width; comboCol++)
+                    // if there isn't enough space to check this combo, skip
+                    if (boardRow + combo.Height > boardHeight || boardCol + combo.Width > boardWidth)
+                        continue;
+
+                    bool isValid = true;
+
+                    // iterate through all of pattern's squares
+                    for (int comboRow = 0; comboRow < combo.Height; comboRow++)
                     {
-                        
-                        // continue to next square if there is no icon set
-                        // in the inspector, the axes are switched
-                        if (!combo.Pattern[comboCol, comboRow])
+                        for (int comboCol = 0; comboCol < combo.Width; comboCol++)
                         {
-                            Debug.Log("going next");
-                            continue;
+
+                            // continue to next square if there is no icon set
+                            // in the inspector, the axes are switched
+                            if (!combo.Pattern[comboCol, comboRow])
+                            {
+                                Debug.Log("going next");
+                                continue;
+                            }
+
+                            // if the board doesn't have an icon, exit loop early
+                            // [y, x] = board's top left corner; add u and v to iterate with pattern
+                            if (reelsAsBoard[boardRow + comboRow, boardCol + comboCol] == ReelIcons.None)
+                            {
+                                Debug.Log("invalid");
+                                isValid = false;
+                                break;
+                            }
                         }
 
-                        // if the board doesn't have an icon, exit loop early
-                        // [y, x] = board's top left corner; add u and v to iterate with pattern
-                        if (reelsAsBoard[boardRow + comboRow, boardCol + comboCol] == ReelIcons.None)
-                        {
-                            Debug.Log("invalid");
-                            isValid = false;
+                        // leave pattern early if the pattern was broken
+                        if (!isValid)
                             break;
-                        }
                     }
 
-                    // leave pattern early if the pattern was broken
-                    if (!isValid)
-                        break;
-                }
-
-                // if the entire pattern was iterated through and remained valid, count
-                if (isValid)
-                {
-                    Debug.Log($"VALID MATCH for {combo.name} at [{boardRow}, {boardCol}]");
-                    matches++;
+                    // if the entire pattern was iterated through and remained valid, count
+                    if (isValid)
+                    {
+                        Debug.Log($"VALID MATCH for {combo.name} at [{boardRow}, {boardCol}]");
+                        matches++;
+                    }
                 }
             }
-        }
 
         return matches;
     }
-    
+
     public void OnTradeFingerButtonPressed()
     {
         if (!TrySubtractFingers(1))
