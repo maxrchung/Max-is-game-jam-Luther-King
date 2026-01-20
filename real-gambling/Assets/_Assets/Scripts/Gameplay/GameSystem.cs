@@ -172,6 +172,13 @@ public class GameSystem : MonoBehaviour
                 reelsAsBoard[y, i] = reelResults[y];
             }
         }
+        //
+        foreach (var spawnedObject in spawnedObjects)
+        {
+            Destroy(spawnedObject);
+        }
+
+        spawnedObjects.Clear();
 
         // 2.5: Delay until spin finishes
         // TODO: use async await
