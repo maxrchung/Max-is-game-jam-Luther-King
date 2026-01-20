@@ -32,6 +32,12 @@ public class MaxIsReel : MonoBehaviour
             return;
         }
 
+        // Should maybe fix offsetting issues
+        if (distance - delta < 0)
+        {
+            delta = distance;
+        }
+
         distance -= delta;
         Vector3 down = delta * Vector3.down;
         float bottomY = -mask.rect.height / 2f - iconWidth / 2f;
@@ -57,7 +63,7 @@ public class MaxIsReel : MonoBehaviour
             Destroy(content.transform.GetChild(i).gameObject);
             images.Clear();
         }
-        
+
         for (int i = 0; i < icons.Count; i++)
         {
             var sprite = SOReferences.Instance.Icons.Values[icons[i]].iconSprite;
