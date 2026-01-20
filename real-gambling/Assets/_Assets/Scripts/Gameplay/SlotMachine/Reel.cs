@@ -32,7 +32,6 @@ public class Reel
 
     public Reel(int newReelSize, int newReelValue)
     {
-        Debug.Log("creating new reel");
         maxReelValue = newReelValue;
         reelValue = 0;
         reelSize = newReelSize;

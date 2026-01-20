@@ -91,10 +91,10 @@ public class GameSystem : MonoBehaviour
         }
 
         reelInstances.Add(CreateReel());
-        // uiReels[0].SetIcons(reelInstances[0].IconsOnReel);
+        uiReels[0].SetIcons(reelInstances[0].IconsOnReel);
 
         reelInstances.Add(CreateReel());
-        // uiReels[1].SetIcons(reelInstances[1].IconsOnReel);
+        uiReels[1].SetIcons(reelInstances[1].IconsOnReel);
 
         AfterPlayerAction();
     }
@@ -184,6 +184,7 @@ public class GameSystem : MonoBehaviour
     public void OnUnlockReelButtonPressed(int reelIndex)
     {
         reelInstances.Add(CreateReel());
+        uiReels[reelIndex].SetIcons(reelInstances[reelIndex].IconsOnReel);
         AfterPlayerAction();
     }
 
