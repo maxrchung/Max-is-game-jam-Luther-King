@@ -34,6 +34,13 @@ public class UIReelSpinButton : MonoBehaviour
 
     public void OnUnlockButtonClicked()
     {
+        // Hardcode don't allow 5th column unlock until 4th
+        if (GameSystem.Instance.HowManyReelsDoWeHaveInterrobang() != 4 && reelIndex == 4)
+        {
+            return;
+        }
+
+
         if (GameSystem.Instance.TrySubtractMoney(unlockAmount))
         {
             isLocked = false;

@@ -427,4 +427,9 @@ public class GameSystem : MonoBehaviour
         RenderMatches(matches);
         AfterPlayerAction();
     }
+
+    public int HowManyReelsDoWeHaveInterrobang()
+    {
+        return reelInstances.Count;
+    }
 }
