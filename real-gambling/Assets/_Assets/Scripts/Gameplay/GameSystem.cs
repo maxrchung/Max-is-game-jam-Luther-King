@@ -342,6 +342,19 @@ public class GameSystem : MonoBehaviour
         return false;
     }
 
+    public bool TryToTryToSubtractMoney(int difference)
+    {
+        if (moneyAmount >= difference)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
     public bool TrySubtractFingers(int difference)
     {
         if (fingerAmount >= difference)
