@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -160,7 +161,7 @@ public class GameSystem : MonoBehaviour
             // 3: Display results of reel
             // List<ReelIcons> reelResults = reelInstances[i].GetIcons(5);
             // uiReels[i].DisplayIcons(reelResults);
-            uiReels[i].SetIcons(reelInstances[i].IconsOnReel);
+            // uiReels[i].SetIcons(reelInstances[i].IconsOnReel);
             uiReels[i].Spin(iconSteps);
             List<ReelIcons> reelResults = reelInstances[i].GetIcons(5);
 
@@ -200,13 +201,18 @@ public class GameSystem : MonoBehaviour
 
         foreach (var match in matches)
         {
+            string posString =
+                string.Join(",", match.matchPositions.Select(matchPos => $"({matchPos.x}, {matchPos.y})"));
+            Debug.Log($"{match.pattern.name} matched at position: {posString}");
             foreach (var position in match.matchPositions)
             {
-                float screenX = (position.y + 0.5f) * slot_width;
-                float screenY = SCREEN_HEIGHT - ((position.x + 0.5f) * slot_height);
-                Debug.Log($"{position.x}, {position.y} => {screenX}, {screenY}");
-                var worldPos = Camera.main.ScreenToWorldPoint(new Vector3(screenX, screenY, 2f));
-                spawnedObjects.Add(Instantiate(appleSpinny, worldPos, Quaternion.identity));
+                var reelVerticalOffset = MaxIsReel.iconWidth * (position.x-2);
+                var reelWorldPos = uiReels[position.y].transform.position;
+                reelWorldPos.y += reelVerticalOffset;
+                // float screenX = (position.y + 0.5f) * slot_width;
+                // float screenY = SCREEN_HEIGHT - ((position.x + 0.5f) * slot_height);
+                // var worldPos = Camera.main.ScreenToWorldPoint(new Vector3(screenX, screenY, 2f));
+                spawnedObjects.Add(Instantiate(appleSpinny, reelWorldPos, Quaternion.identity));
             }
         }
     }

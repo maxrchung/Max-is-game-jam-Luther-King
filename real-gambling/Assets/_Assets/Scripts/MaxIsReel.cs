@@ -11,7 +11,7 @@ public class MaxIsReel : MonoBehaviour
     private List<Image> images = new();
 
     public float scrollSpeed = 200;
-    public float iconWidth = 100;
+    public static float iconWidth = 100;
     public int steps = 0;
 
     private float distance = 0;
