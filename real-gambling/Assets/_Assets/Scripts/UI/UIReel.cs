@@ -24,6 +24,10 @@ public class UIReel : MonoBehaviour
 
     public void SetIcons(List<ReelIcons> icons)
     {
+        for (int i = maxIsReel.content.transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(maxIsReel.content.transform.GetChild(i).gameObject);
+        }
         maxIsReel.SetIcons(icons);
     }
 

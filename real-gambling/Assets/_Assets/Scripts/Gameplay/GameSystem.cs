@@ -215,6 +215,8 @@ public class GameSystem : MonoBehaviour
         Debug.Log($"Changing reel for {reelIndex}");
         reelInstances[reelIndex].UpgradeReelValue(5);
         print(reelInstances[reelIndex]);
+        uiReels[0].SetIcons(reelInstances[reelIndex].GetAllIcons());
+        
     }
 
     private List<Match> CheckMatches(List<WinningCombinationSO> combinationsToCheck)
