@@ -13,8 +13,6 @@ public class UIReelSpinButton : MonoBehaviour
     [SerializeField] private TMP_Text unlockReelText;
     [SerializeField] private Button upgradeReelButton;
     [SerializeField] private TMP_Text upgradeReelText;
-    [SerializeField] private Button changeReelButton;
-    [SerializeField] private TMP_Text changeReelText;
     [SerializeField] private Image reelSpinActiveImage;
     [Space]
     [SerializeField] private Color activeColor;
@@ -68,7 +66,6 @@ public class UIReelSpinButton : MonoBehaviour
             
             unlockReelButton.gameObject.SetActive(false);
             upgradeReelButton.gameObject.SetActive(true);
-            changeReelButton.gameObject.SetActive(true);
         }
         else
         {
@@ -77,7 +74,6 @@ public class UIReelSpinButton : MonoBehaviour
             unlockReelButton.gameObject.SetActive(true);
             unlockReelText.text = $"UNLOCK (${unlockAmount})";
             upgradeReelButton.gameObject.SetActive(false);
-            changeReelButton.gameObject.SetActive(false);
         }
     }
 }
