@@ -185,19 +185,6 @@ public class GameSystem : MonoBehaviour
 
     private void RenderMatches(List<Match> matches)
     {
-        // clear spawned objects
-        foreach (var spawnedObject in spawnedObjects)
-        {
-            Destroy(spawnedObject);
-        }
-
-        spawnedObjects.Clear();
-
-        var SCREEN_WIDTH = 1024;
-        var SCREEN_HEIGHT = 768;
-        var slot_width = SCREEN_WIDTH / reelsAsBoard.GetLength(1);
-        var slot_height = SCREEN_HEIGHT / reelsAsBoard.GetLength(0);
-
         foreach (var match in matches)
         {
             string posString =
@@ -207,10 +194,11 @@ public class GameSystem : MonoBehaviour
             {
                 var reelVerticalOffset = MaxIsReel.iconWidth * (position.x-2);
                 var reelWorldPos = uiReels[position.y].transform.position;
-                reelWorldPos.y += reelVerticalOffset;
-                // float screenX = (position.y + 0.5f) * slot_width;
-                // float screenY = SCREEN_HEIGHT - ((position.x + 0.5f) * slot_height);
-                // var worldPos = Camera.main.ScreenToWorldPoint(new Vector3(screenX, screenY, 2f));
+                RectTransform rt = uiReels[position.y].maxIsReel.mask;
+                if (rt != null)
+                {
+                    reelWorldPos = rt.TransformPoint(rt.localPosition - new Vector3(0, reelVerticalOffset, 0));
+                }
                 spawnedObjects.Add(Instantiate(appleSpinny, reelWorldPos, Quaternion.identity));
             }
         }
