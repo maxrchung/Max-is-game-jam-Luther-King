@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -71,8 +72,13 @@ public class Reel
 
     private void AddIconsUntilValue()
     {
+        int count = 0;
         while (reelValue < maxReelValue)
         {
+            if(count > 100)
+            {
+                break;
+            }
             int tryIndex = Random.Range(0, reelSize);
             if (reelItems < iconsOnReel.Count)
             {
@@ -97,19 +103,24 @@ public class Reel
                     reelValue += SOReferences.Instance.Icons.Values[SOReferences.Instance.Icons.Ranks[tryNum]].PointAmount;
                 }
             }
+            count++;
         }
+        Debug.Log(reelValue + ", " +  maxReelValue);
     }
 
     public void UpgradeReelValue(int upgradeVal)
     {
-        for (int i = 0; i < reelSize; i++)
+        if(maxReelValue < iconsOnReel.Count * 8)
         {
-            iconsOnReel[i] = ReelIcons.None;
+            for (int i = 0; i < reelSize; i++)
+            {
+                iconsOnReel[i] = ReelIcons.None;
+            }
+            maxReelValue += upgradeVal;
+            reelValue = 0;
+            reelItems = 0;
+            AddIconsUntilValue();
         }
-        maxReelValue += upgradeVal;
-        reelValue = 0;
-        reelItems = 0;
-        AddIconsUntilValue();
     }
 
     public List<ReelIcons> GetIcons(int size)
