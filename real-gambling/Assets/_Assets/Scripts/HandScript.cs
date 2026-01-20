@@ -10,6 +10,7 @@ public class HandScript : MonoBehaviour
     public Image RedPanel;
     public Image EndPanel;
     public Text[] EndTexts;
+    public SoundManager soundManager;
 
     private Animator animator;
 
@@ -22,6 +23,8 @@ public class HandScript : MonoBehaviour
     public void Pull()
     {
         animator.SetTrigger("Pull");
+        soundManager.PlaySound(10);
+        soundManager.PlayIntroAndLoop();
     }
 
     public void Return()
@@ -41,6 +44,7 @@ public class HandScript : MonoBehaviour
 
     public void Cut()
     {
+        soundManager.StopSong();
         StartCoroutine(CutCoroutine());
     }
 
@@ -88,6 +92,7 @@ public class HandScript : MonoBehaviour
         Color color = RedPanel.color;
         color.a = 0.9f; // Fully visible
         RedPanel.color = color;
+        soundManager.PlaySound(9);
         var time = 0f;
         while (time < 1f)
         {
