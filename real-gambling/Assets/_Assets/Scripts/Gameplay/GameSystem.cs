@@ -43,6 +43,7 @@ public class GameSystem : MonoBehaviour
     public ParticleManager particleManager;
     public float difficulty_scaling;
     private int pull_count = 0;
+    public SoundManager soundManager;
 
     public int MoneyAmount
     {
@@ -230,7 +231,7 @@ public class GameSystem : MonoBehaviour
     public void OnUpgradeReelButtonPressed(int reelIndex)
     {
         Debug.Log($"Changing reel for {reelIndex}");
-        reelInstances[reelIndex].UpgradeReelValue(8);
+        reelInstances[reelIndex].UpgradeReelValue(7);
         print(reelInstances[reelIndex]);
         uiReels[reelIndex].SetIcons(reelInstances[reelIndex].IconsOnReel);
         AfterPlayerAction();
@@ -399,9 +400,10 @@ public class GameSystem : MonoBehaviour
         }
 
         List<Match> matches = CheckMatches(combinationsToCheck);
-
+        bool kaching = false;
         foreach (Match m in matches)
         {
+            kaching = true;
             foreach (Vector2Int pos in m.matchPositions)
             {
 
@@ -436,6 +438,10 @@ public class GameSystem : MonoBehaviour
                         break;
                 }
             }
+        }
+        if(kaching)
+        {
+            soundManager.PlaySound(8);
         }
 
         // 4: Score matches
