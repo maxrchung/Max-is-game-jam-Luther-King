@@ -1,11 +1,13 @@
 ﻿public enum ReelIcons
 {
     None,
-    Snake,
-    Bread,
+    Worm,
+    SmallFry,
+    Hook,
     Fish,
-    SixSeven,
-    PepperMan,
-    Mouth,
-    CarKey
+    Bass,
+    Mackerel,
+    Chef,
+    Sashimi,
+    MaxFish
 }

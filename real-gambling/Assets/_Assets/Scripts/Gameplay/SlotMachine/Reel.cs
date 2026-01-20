@@ -61,7 +61,7 @@ public class Reel
             // if current index has no icon and roll is successful
             if (iconsOnReel[i] == ReelIcons.None && Random.Range(0, 2) == 1)
             {
-                iconsOnReel[i] = ReelIcons.Snake;
+                iconsOnReel[i] = ReelIcons.Worm;
                 remainingIcons--;
             }
 
@@ -79,7 +79,7 @@ public class Reel
             {
                 if (iconsOnReel[tryIndex] == ReelIcons.None)
                 {
-                    int tryNum = Random.Range(1, 7);
+                    int tryNum = Random.Range(1, SOReferences.Instance.Icons.Ranks.Count);
                     if (reelValue + SOReferences.Instance.Icons.Values[SOReferences.Instance.Icons.Ranks[tryNum]].PointAmount <= maxReelValue)
                     {
                         iconsOnReel[tryIndex] = SOReferences.Instance.Icons.Ranks[tryNum];
@@ -90,7 +90,7 @@ public class Reel
             }
             else
             {
-                int tryNum = Random.Range(1, 7);
+                int tryNum = Random.Range(1, SOReferences.Instance.Icons.Ranks.Count);
                 if (reelValue + SOReferences.Instance.Icons.Values[SOReferences.Instance.Icons.Ranks[tryNum]].PointAmount <= maxReelValue)
                 {
                     reelValue -= SOReferences.Instance.Icons.Values[iconsOnReel[tryNum]].PointAmount;

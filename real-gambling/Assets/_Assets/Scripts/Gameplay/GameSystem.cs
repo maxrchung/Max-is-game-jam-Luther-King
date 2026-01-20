@@ -100,7 +100,7 @@ public class GameSystem : MonoBehaviour
 
     public Reel CreateReel()
     {
-        Reel newReel = new Reel(6, 8, 12);
+        Reel newReel = new Reel(12,10);
         Debug.Log(newReel.ToString());
         return newReel;
     }
@@ -213,8 +213,8 @@ public class GameSystem : MonoBehaviour
     public void OnChangeReelButtonPressed(int reelIndex)
     {
         Debug.Log($"Changing reel for {reelIndex}");
-        Reel newReel = CreateReel();
-        reelInstances[reelIndex] = newReel;
+        reelInstances[reelIndex].UpgradeReelValue(5);
+        print(reelInstances[reelIndex]);
     }
 
     private List<Match> CheckMatches(List<WinningCombinationSO> combinationsToCheck)

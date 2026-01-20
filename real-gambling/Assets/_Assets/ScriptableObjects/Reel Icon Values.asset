@@ -16,14 +16,16 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 21300000, guid: 4963ec1748a8cd04b8ef5f8ac05c71cf, type: 3}
-    - {fileID: 21300000, guid: 9be76ff7bce1eff498bcbc6a9feb53bd, type: 3}
+    - {fileID: 21300000, guid: 9b0202ddab3af594c86ed337eac001b3, type: 3}
+    - {fileID: 21300000, guid: 5e95f3de1e6301d4bb69ed96724f19db, type: 3}
+    - {fileID: 21300000, guid: 952e38dfe29b58242b9188afcb167d23, type: 3}
     - {fileID: 21300000, guid: 09a6a7c941ea72f498a6559da10459d7, type: 3}
-    - {fileID: 21300000, guid: 42559198a24f34545969b1306106cfdf, type: 3}
-    - {fileID: 21300000, guid: 657486870828aa843a673db59c4a1ba0, type: 3}
-    - {fileID: 21300000, guid: 1864c35c501bb414abb220d368d56cdd, type: 3}
-    - {fileID: 21300000, guid: e3f63c8426f9bb740923fddf721f2268, type: 3}
+    - {fileID: 21300000, guid: 73a94d2eb908ba146b7fc4fee4c4353b, type: 3}
+    - {fileID: 21300000, guid: 5993a7ce42f9ec147b6f037436267e8f, type: 3}
+    - {fileID: 21300000, guid: eab6ebbb0dcd6dc4fa455174270bd3e9, type: 3}
     - {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+    - {fileID: 21300000, guid: 6b9c7bf578bd6a946bc4ef75a23ba759, type: 3}
+    - {fileID: 21300000, guid: 31b509adac86268468df0a0bb00644a6, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -48,7 +50,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 8
+      Data: 10
     - Name: 
       Entry: 7
       Data: 
@@ -242,9 +244,57 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 8
+    - Name: $v
+      Entry: 7
+      Data: 10|IconValues, Assembly-CSharp
+    - Name: iconSprite
+      Entry: 10
+      Data: 8
+    - Name: Probability
+      Entry: 3
+      Data: 0
+    - Name: PointAmount
+      Entry: 3
+      Data: 8
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 9
+    - Name: $v
+      Entry: 7
+      Data: 11|IconValues, Assembly-CSharp
+    - Name: iconSprite
+      Entry: 10
+      Data: 9
+    - Name: Probability
+      Entry: 3
+      Data: 0
+    - Name: PointAmount
+      Entry: 3
+      Data: 9
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
       Entry: 8
       Data: 
-  ranks: 0000000001000000020000000300000004000000050000000600000007000000
+  ranks: 00000000010000000200000003000000040000000500000006000000080000000700000009000000
