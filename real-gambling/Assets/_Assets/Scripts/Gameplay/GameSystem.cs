@@ -439,7 +439,7 @@ public class GameSystem : MonoBehaviour
                 }
             }
         }
-        if(kaching)
+        if (kaching)
         {
             soundManager.PlaySound(8);
         }

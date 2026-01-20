@@ -182,6 +182,8 @@ public class HandScript : MonoBehaviour
         color.a = 1;
         EndTexts[3].color = color;
 
+        yield return new WaitForSeconds(1);
+
         YouLeftText.gameObject.SetActive(true);
         YouLeftText.text = takeAway.ToString() + "$";
 
