@@ -6,6 +6,7 @@ public class SoundManager : MonoBehaviour
 
     public AudioClip[] media;
     public AudioSource source;
+    public AudioSource musicSource;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,18 +20,18 @@ public class SoundManager : MonoBehaviour
 
     public void PlayIntroAndLoop()
     {
-        if(!source.isPlaying)
+        if(!musicSource.isPlaying)
         {
             float delayLength = media[0].length;
-            source.PlayOneShot(media[0]);
-            source.clip = media[1];
-            source.loop = true;
-            source.PlayDelayed(delayLength);
+            musicSource.PlayOneShot(media[0]);
+            musicSource.clip = media[1];
+            musicSource.loop = true;
+            musicSource.PlayDelayed(delayLength);
         }
     }
 
     public void StopSong()
     {
-        source.Stop();
+        musicSource.Stop();
     }
 }
